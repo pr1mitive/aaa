@@ -1,7 +1,11 @@
 /**
- * 発注管理システム - 設定ファイル
+ * 発注管理システム - 設定ファイル (ERP連携対応版)
  * 
  * アプリID、フィールドコード、定数などの設定を管理
+ * 
+ * 【更新履歴】
+ * 2026-02-14: アプリID・フィールドコードを実際の値に更新
+ * 2026-02-14: ERP連携用テーブルフィールド追加
  */
 
 const CONFIG = {
@@ -10,12 +14,12 @@ const CONFIG = {
   // ============================================
   APP_IDS: {
     PO_MANAGEMENT: kintone.app.getId(), // 発注管理アプリ(現在のアプリ)
-    VENDOR_MASTER: 'XXX',    // 発注先マスタ ※要設定
-    ITEM_MASTER: 'XXX',      // アイテムマスタ ※要設定
-    QUOTE_MASTER: 'XXX',     // 見積マスタ ※要設定
-    BASIC_INFO: 'XXX',       // 基本情報マスタ ※要設定
+    VENDOR_MASTER: '746',    // 発注先マスタ
+    ITEM_MASTER: '745',      // アイテムマスタ
+    QUOTE_MASTER: '750',     // 見積マスタ
+    BASIC_INFO: '749',       // 基本情報マスタ
     PROJECT_MASTER: '674',   // 案件マスタ(外部アプリ)
-    WAREHOUSE: 'XXX'         // 倉庫マスタ ※要設定
+    WAREHOUSE: '747'         // 倉庫マスタ
   },
   
   // ============================================
@@ -43,6 +47,7 @@ const CONFIG = {
       STATUS: 'status',                 // ステータス
       PO_FILE: 'po_file',               // 発注書ファイル
       ITEMS: 'po_items',                // 発注内訳テーブル
+      ERP_ITEMS: 'erp_items',           // ERP登録用テーブル
       SUBTOTAL: 'subtotal',             // 小計
       TAX_AMOUNT: 'tax_amount',         // 税額
       TOTAL: 'total',                   // 総合計
@@ -60,9 +65,16 @@ const CONFIG = {
       UNIT: 'unit',                     // 単位
       AMOUNT: 'amount',                 // 金額
       IS_INVENTORY: 'is_inventory',     // 在庫管理区分
-      PROJECT_IDS: 'project_ids',       // 案件番号リスト(カンマ区切り)
-      PROJECT_DISPLAY: 'project_display', // 案件番号表示用
       REMARKS: 'remarks'                // 備考
+    },
+    
+    // ERP登録用テーブル内フィールド
+    ERP_ITEM: {
+      ITEM_CODE: 'erp_item_code',       // アイテムコード
+      ITEM_DETAIL: 'erp_item_detail',   // 詳細項目
+      PROJECT_ID: 'erp_project_id',     // 案件番号
+      QUANTITY: 'erp_quantity',         // 数量
+      UNIT_PRICE: 'erp_unit_price'      // 単価
     },
     
     // 発注先マスタ
@@ -191,7 +203,9 @@ const CONFIG = {
       SELECT: '選択',
       DELETE: '削除',
       CLOSE: '閉じる',
-      CONFIRM: '確定'
+      CONFIRM: '確定',
+      PROJECT_ALLOCATION: '案件配分',
+      PASTE: '📋 貼り付け'
     },
     
     MESSAGES: {
@@ -207,7 +221,12 @@ const CONFIG = {
       ERROR_NO_VENDOR: '発注先を選択してください',
       ERROR_NO_RESULTS: '該当するデータが見つかりません',
       INFO_ITEMS_IMPORTED: '{count}行の明細を取り込みました',
-      WARN_NO_EXCHANGE_RATE: '参考為替レートが入力されていません。このまま登録しますか?'
+      WARN_NO_EXCHANGE_RATE: '参考為替レートが入力されていません。このまま登録しますか?',
+      ERROR_NO_ITEM_CODE: 'アイテムコードを入力してください',
+      ERROR_NO_QUANTITY: '数量を入力してください',
+      WARN_ALLOCATION_MISMATCH: '配分数量の合計({allocated})が明細数量({total})と一致していません。\nこのまま保存しますか?',
+      ERROR_DUPLICATE_PROJECT: '同じ案件番号が複数入力されています',
+      INFO_NO_VALID_DATA: '有効なデータが見つかりませんでした。\n\nフォーマット例:\nP001\t6\nP002\t4'
     }
   },
   
